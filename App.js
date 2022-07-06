@@ -74,10 +74,17 @@ export default function App() {
       }
     );
   };
+
+  const disconnect = () => {
+    geofireRef.remove(uid).then(() => {
+      console.log("delete");
+    });
+  };
+
   useEffect(() => {
     setUpFireBase();
     return () => {
-      geoFire.remove(uid).then(
+      geofireRef.remove(uid).then(
         function () {
           console.log("Provided key has been removed from GeoFire");
         },
@@ -122,6 +129,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Button onPress={connect} title="Connect" />
+      <Button onPress={disconnect} title="Disconnect" />
     </View>
   );
 }
