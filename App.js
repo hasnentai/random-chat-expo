@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import { GeoFire } from "geofire";
 import firebase from "firebase";
 import { useEffect } from "react";
@@ -7,7 +7,14 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function App() {
   const uid = uuidv4();
-  useEffect(() => {
+  var ref;
+  var geofireRef;
+  let users = [
+    [40.73061, -73.935242],
+    [12.888728, 77.601411],
+  ];
+
+  const setUpFireBase = () => {
     const firebaseConfig = {
       apiKey: "AIzaSyAYL85a8H6c-_9fU4OtDE6LLTkVOJJIqAg",
       authDomain: "native-base-hack.firebaseapp.com",
@@ -21,19 +28,16 @@ export default function App() {
       firebase.initializeApp(firebaseConfig);
     }
 
-    var ref = firebase.database().ref();
-    const geofireRef = new GeoFire(firebase.database().ref("getData"));
-    let lat = 12.8832182;
-    let long = 77.6048333;
-    let users = [
-      [40.73061, -73.935242],
-      [2.8832182, 77.6048333],
-    ];
+    ref = firebase.database().ref();
+    geofireRef = new GeoFire(firebase.database().ref("getData"));
+  };
 
-    geofireRef.set(uid, users[0]);
+  const connect = () => {
+    geofireRef.set(uid, users[1]);
+
     var geoQuery = geofireRef.query({
-      center: users[0],
-      radius: 10.5,
+      center: users[1],
+      radius: 100, // No Decimal Values to be provided
     });
 
     var onReadyRegistration = geoQuery.on("ready", function () {
@@ -69,7 +73,9 @@ export default function App() {
         );
       }
     );
-
+  };
+  useEffect(() => {
+    setUpFireBase();
     return () => {
       geoFire.remove(uid).then(
         function () {
@@ -115,8 +121,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>I am from BLR</Text>
-      <StatusBar style="auto" />
+      <Button onPress={connect} title="Connect" />
     </View>
   );
 }
