@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export default function App() {
+  const uid = uuidv4();
   useEffect(() => {
     const firebaseConfig = {
       apiKey: "AIzaSyAYL85a8H6c-_9fU4OtDE6LLTkVOJJIqAg",
@@ -24,10 +25,14 @@ export default function App() {
     const geofireRef = new GeoFire(firebase.database().ref("getData"));
     let lat = 12.8832182;
     let long = 77.6048333;
-    let uid = uuidv4();
-    geofireRef.set(uid, [lat, long]);
+    let users = [
+      [40.73061, -73.935242],
+      [2.8832182, 77.6048333],
+    ];
+
+    geofireRef.set(uid, users[0]);
     var geoQuery = geofireRef.query({
-      center: [lat, long],
+      center: users[0],
       radius: 10.5,
     });
 
@@ -64,11 +69,53 @@ export default function App() {
         );
       }
     );
+
+    return () => {
+      geoFire.remove(uid).then(
+        function () {
+          console.log("Provided key has been removed from GeoFire");
+        },
+        function (error) {
+          console.log("Error: " + error);
+        }
+      );
+
+      var onKeyEnteredRegistration = geoQuery.on(
+        "key_entered",
+        function (key, location, distance) {
+          console.log(
+            key +
+              " entered query at " +
+              location +
+              " (" +
+              distance +
+              " km from center)"
+          );
+        }
+      );
+
+      var onKeyExitedRegistration = geoQuery.on(
+        "key_exited",
+        function (key, location, distance) {
+          console.log(
+            key +
+              " exited query to " +
+              location +
+              " (" +
+              distance +
+              " km from center)"
+          );
+
+          // Cancel all of the query's callbacks
+          geoQuery.cancel();
+        }
+      );
+    };
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>I am from BLR</Text>
       <StatusBar style="auto" />
     </View>
   );
