@@ -1,12 +1,12 @@
-import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { GeoFire } from "geofire";
 import firebase from "firebase";
 import { useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+
+import Compass from "./components/compass";
 
 export default function App() {
-  const uid = uuidv4();
+  const uid = "11edc52b-2918-4d71-9058-f7285e29d894";
   var ref;
   var geofireRef;
   let users = [
@@ -130,6 +130,7 @@ export default function App() {
     <View style={styles.container}>
       <Button onPress={connect} title="Connect" />
       <Button onPress={disconnect} title="Disconnect" />
+      <Compass />
     </View>
   );
 }
