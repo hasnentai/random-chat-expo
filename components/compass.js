@@ -1,42 +1,33 @@
 import { Button, ImageBackground, StyleSheet, Text, View } from "react-native";
 
 export default function Compass() {
+  const url =
+    "https://media.istockphoto.com/vectors/city-urban-streets-roads-abstract-map-vector-id1287419511?b=1&k=20&m=1287419511&s=612x612&w=0&h=VkA1WKAPuTygRa-ZisvGwiIo84-gWzB5YMwrO4ErYuI=";
+
   return (
-    <View style={styles.compassWrapper}>
-      <View style={styles.outerCompassBefore}></View>
-      <View style={styles.outerCompassAfter}></View>
-      <View style={styles.baseMarking30Deg}></View>
-      <View style={styles.baseMarking45Deg}></View>
-      <View style={styles.baseMarking60Deg}></View>
-      <View style={styles.baseMarking75Deg}></View>
-      <View style={styles.baseMarking105Deg}></View>
-      <View style={styles.baseMarking120Deg}></View>
-      <View style={styles.baseMarking135Deg}></View>
-      <View style={styles.baseMarking150Deg}></View>
-      <View style={styles.baseMarking165Deg}></View>
-      <View style={styles.baseMarking195Deg}></View>
-      <View style={styles.northPoleIndicator}>N</View>
-      <View style={styles.westPoleIndicator}>W</View>
-      <View style={styles.eastPoleIndicator}>E</View>
-      <View style={styles.southPoleIndicator}>S</View>
+    <View>
+      <View style={styles.compassWrapper}>
+        <View style={styles.outerCompassBefore}></View>
+        <View style={styles.outerCompassAfter}></View>
+        <View style={styles.baseMarking30Deg}></View>
+        <View style={styles.baseMarking45Deg}></View>
+        <View style={styles.baseMarking60Deg}></View>
+        <View style={styles.baseMarking75Deg}></View>
+        <View style={styles.baseMarking105Deg}></View>
+        <View style={styles.baseMarking120Deg}></View>
+        <View style={styles.baseMarking135Deg}></View>
+        <View style={styles.baseMarking150Deg}></View>
+        <View style={styles.baseMarking165Deg}></View>
+        <View style={styles.baseMarking195Deg}></View>
+        <Text style={styles.northPoleIndicator}>N</Text>
+        <Text style={styles.westPoleIndicator}>W</Text>
+        <Text style={styles.eastPoleIndicator}>E</Text>
+        <Text style={styles.southPoleIndicator}>S</Text>
+      </View>
       <ImageBackground
-        source={
-          "https://media.istockphoto.com/vectors/city-urban-streets-roads-abstract-map-vector-id1287419511?b=1&k=20&m=1287419511&s=612x612&w=0&h=VkA1WKAPuTygRa-ZisvGwiIo84-gWzB5YMwrO4ErYuI="
-        }
-        style={{
-          position: "absolute",
-          bottom: 0,
-          top: 0,
-          left: 0,
-          right: 0,
-        }}
-        imageStyle={{
-          height: "30rem",
-          width: "30rem",
-          filter: "contrast(0.6)",
-          margin: "auto",
-          borderRadius: "50%",
-        }}
+        source={url}
+        style={styles.imageView}
+        imageStyle={styles.image}
       ></ImageBackground>
     </View>
   );
@@ -79,12 +70,6 @@ const baseMarking = {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   compassWrapper: {
     width: "32rem",
     height: "32rem",
@@ -92,15 +77,22 @@ const styles = StyleSheet.create({
     position: "relative",
     borderRadius: "50%",
     margin: "20px",
+    transition: "all 0.5s ease-in-out",
+    transform: "rotate(20deg)",
   },
-  compass: {
-    width: "30rem",
+  imageView: {
+    position: "absolute",
+    bottom: 0,
+    top: 0,
+    left: 0,
+    right: 0,
+  },
+  image: {
     height: "30rem",
-
-    border: "3px dotted #282828",
+    width: "30rem",
+    filter: "contrast(0.6)",
+    margin: "auto",
     borderRadius: "50%",
-    margin: "50px auto",
-    padding: "1rem",
   },
   outerCompass: {
     position: "relative",
@@ -124,8 +116,6 @@ const styles = StyleSheet.create({
     ...baseStyle,
     transform: "translateX(-50%)",
   },
-
-  outerCompassMarking: baseStyle,
 
   baseMarking30Deg: {
     ...baseMarking,
