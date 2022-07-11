@@ -33,27 +33,6 @@ export default function Compass() {
   );
 }
 
-{
-  /* <View style={styles.outerCompassAfter}></View>
-        <View style={styles.outerCompassBefore}></View>
-        <View style={styles.baseMarking30Deg}></View>
-        <View style={styles.baseMarking60Deg}></View>
-        <View style={styles.baseMarking120Deg}></View>
-        <View style={styles.baseMarking150Deg}></View> */
-}
-{
-  /* <View style={styles.innerCompass}>
-              <View style={styles.innerCompassBefore}></View>
-            </View> */
-}
-
-{
-  /* <View style={styles.northPoleIndicator}>N</View>
-          <View style={styles.westPoleIndicator}>W</View>
-          <View style={styles.eastPoleIndicator}>E</View>
-          <View style={styles.southPoleIndicator}>S</View> */
-}
-
 const baseStyle = {
   content: "",
   position: "absolute",
@@ -181,7 +160,7 @@ const styles = StyleSheet.create({
   northPoleIndicator: {
     position: "absolute",
     padding: "0px 10px",
-
+    fontWeight: "bold",
     top: -20,
     left: "50%",
     textAlign: "center",
@@ -191,17 +170,20 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: "50%",
     left: -20,
+    fontWeight: "bold",
     transform: "translateY(-50%)",
   },
   eastPoleIndicator: {
     position: "absolute",
     top: "50%",
     right: -15,
+    fontWeight: "bold",
     transform: "translateY(-50%)",
   },
   southPoleIndicator: {
     position: "absolute",
     left: "50%",
+    fontWeight: "bold",
     transform: "translateX(-50%)",
     bottom: -20,
   },
