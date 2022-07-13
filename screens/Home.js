@@ -18,6 +18,9 @@ import {
   Pressable,
 } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
+import { AntDesign } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function Home() {
   let { colorMode } = useColorMode();
@@ -400,8 +403,55 @@ export default function Home() {
             Jessica Renart
           </Text>
 
-          <Box borderWidth={1} alignItems={'center'} justifyContent={'center'}>
-            <Text>36m from you</Text>
+          <Box
+            borderWidth={1}
+            borderRadius={15}
+            borderColor={'#757f80'}
+            alignItems={'center'}
+            justifyContent={'center'}
+            paddingRight={1}
+            paddingLeft={1}
+            style={{ marginTop: 10 }}
+          >
+            <Text style={{ fontSize: 14, margin: 2, color: '#757f80' }}>
+              36m from you
+            </Text>
+          </Box>
+
+          <Box
+            width={'75%'}
+            flexDirection={'row'}
+            alignItems={'center'}
+            justifyContent={'space-around'}
+            style={{ marginTop: 40, marginBottom: 5 }}
+          >
+            <Box style={{ marginTop: 17 }}>
+              <Feather name="share" size={25} color="black" />{' '}
+            </Box>
+            <Box
+              width={20}
+              height={20}
+              borderRadius={22}
+              backgroundColor={'#4fbdff'}
+              alignItems={'center'}
+              justifyContent={'center'}
+              style={{
+                transform: [{ rotate: '45deg' }],
+              }}
+            >
+              <AntDesign
+                style={{
+                  transform: [{ rotate: '-45deg' }],
+                  color: '#fff',
+                }}
+                name="message1"
+                size={25}
+                color="black"
+              />
+            </Box>
+            <Box>
+              <Feather name="phone-call" size={25} color="black" />
+            </Box>
           </Box>
         </Actionsheet.Content>
       </Actionsheet>
