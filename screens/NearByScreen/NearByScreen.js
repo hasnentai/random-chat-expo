@@ -21,8 +21,15 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function Home() {
+//components
+
+import TopButtons from './components/TopButtons';
+import BackgroundImage from './components/BackgroundImage';
+
+export default function NearByScreen() {
   let { colorMode } = useColorMode();
   let rotateValueHolder = new Animated.Value(0);
   const { isOpen, onOpen, onClose } = useDisclose();
@@ -54,36 +61,28 @@ export default function Home() {
 
   return (
     <Box
-      // safeAreaTop
-
+      safeAreaTop
       width={'100%'}
       height={'100%'}
       bg={colorMode === 'light' ? 'primary.300' : 'blueGray.900'}
     >
+      {/* <--- Background Image --> */}
+      <BackgroundImage />
+      {/* <---x--x---> */}
+
+      {/* <--- Top buttons --> */}
+      <TopButtons />
+      {/* <---x--x---> */}
       <Box
         style={{
           width: '100%',
           alignItems: 'center',
-          marginTop: 100,
+          marginTop: 10,
           justifyContent: 'center',
           position: 'relative',
           zIndex: 999999999999,
         }}
       >
-        {/* this is the image for the backgroun */}
-        <Image
-          source={{
-            uri: 'https://w0.peakpx.com/wallpaper/35/380/HD-wallpaper-map-heart-love-night-sky.jpg',
-          }}
-          style={{
-            position: 'absolute',
-            width: Dimensions.get('window').width * 0.95,
-            height: Dimensions.get('window').width * 0.95,
-            transform: [{ scale: 2 }],
-            marginTop: 100,
-            opacity: 0.05,
-          }}
-        />
         {/* images of people discory */}
         <Pressable
           onPress={onOpen}
@@ -319,7 +318,7 @@ export default function Home() {
           }}
         />
 
-        <LinearGradient
+        {/* <LinearGradient
           style={{
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').height,
@@ -332,7 +331,7 @@ export default function Home() {
             'transparent',
             colorMode === 'light' ? '#a33043' : '#0f172a',
           ]}
-        ></LinearGradient>
+        ></LinearGradient> */}
         {/* { transform: [{ rotate: rotateData }] } */}
 
         <Image
@@ -383,6 +382,85 @@ export default function Home() {
           </View>
         </Animated.View>
       </Box>
+
+      <Box width={'100%'} padding={10}>
+        <Text
+          style={{
+            fontSize: 18,
+            color: '#ffff',
+            zIndex: 9999999999999999999999999999,
+            marginTop: 7,
+          }}
+        >
+          More people nearby
+        </Text>
+        <Box flexDirection={'row'} marginTop={5}>
+          <Image
+            source={{
+              uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Danielle_Campbell_at_PaleyFest_2014.jpg/640px-Danielle_Campbell_at_PaleyFest_2014.jpg',
+            }}
+            style={{
+              width: 45,
+              height: 45,
+              backgroundColor: '#fff',
+              borderRadius: 25,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVbfZ5IXRSdzQzWTj-SnVOWsYCs5SovNh13E-OrmffvA&s',
+            }}
+            style={{
+              width: 45,
+              height: 45,
+              backgroundColor: '#fff',
+              borderRadius: 25,
+              marginLeft: 10,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa04T5t91dxjW4xaOWiHcEIs6VfFehQZT-w3Chy-F_WQ&s',
+            }}
+            style={{
+              width: 45,
+              height: 45,
+              backgroundColor: '#fff',
+              borderRadius: 25,
+              marginLeft: 10,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwjSKld1aEffx_uMUEcq0R2jcbga6kqDG7AYQzRS0UuA&s',
+            }}
+            style={{
+              width: 45,
+              height: 45,
+              backgroundColor: '#fff',
+              borderRadius: 25,
+              marginLeft: 10,
+            }}
+          />
+
+          <Box
+            style={{
+              width: 45,
+              height: 45,
+              borderRadius: 25,
+              marginLeft: 10,
+              borderWidth: 0.2,
+              borderColor: '#696969',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text style={{ color: '#696969' }}>25+</Text>
+          </Box>
+        </Box>
+      </Box>
+
       <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content style={{ backgroundColor: '#fff' }}>
           <Box width={'100%'} alignItems={'center'}>

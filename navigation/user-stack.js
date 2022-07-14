@@ -11,7 +11,6 @@ import { useRef, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 //screens
-import Home from '../screens/Home';
 import Setting from '../screens/Setting';
 
 //icons
@@ -21,6 +20,7 @@ import {
   FontAwesome,
   Ionicons,
 } from '@expo/vector-icons';
+import NearByScreen from '../screens/NearByScreen/NearByScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -105,7 +105,7 @@ const UserStack = () => {
       >
         <Tab.Screen
           name="Home"
-          component={Home}
+          component={NearByScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <View
@@ -147,7 +147,7 @@ const UserStack = () => {
         />
         <Tab.Screen
           name="Check"
-          component={Home}
+          component={NearByScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <Animated.View style={{ transform: [{ scale: anim.current }] }}>
@@ -159,7 +159,7 @@ const UserStack = () => {
         />
         <Tab.Screen
           name="Check1"
-          component={Home}
+          component={NearByScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <View
@@ -180,7 +180,7 @@ const UserStack = () => {
         />
         <Tab.Screen
           name="Check2"
-          component={Home}
+          component={NearByScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <View
