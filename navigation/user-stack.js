@@ -10,9 +10,6 @@ import {
 import { useRef, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
-//screens
-import Setting from '../screens/Setting';
-
 //icons
 import {
   MaterialCommunityIcons,
@@ -20,7 +17,11 @@ import {
   FontAwesome,
   Ionicons,
 } from '@expo/vector-icons';
+
+//screens
+import Setting from '../screens/Setting';
 import NearByScreen from '../screens/NearByScreen/NearByScreen';
+import MessagesScreen from '../screens/MessagesScreen/MessagesScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -125,8 +126,8 @@ const UserStack = () => {
           }}
         />
         <Tab.Screen
-          name="Setting"
-          component={Setting}
+          name="MessagesScreen"
+          component={MessagesScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <View
