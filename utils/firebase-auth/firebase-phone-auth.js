@@ -32,7 +32,7 @@ const verifyCode = async (verificationId, verificationCode, showMessage) => {
       verificationCode
     );
     let creds = await firebase.auth().signInWithCredential(credential);
-    console.log(creds.email);
+    console.log(creds);
     showMessage({ text: "Phone authentication successful 👍" });
 
     // save("verificationId", credential.Object.verificationId);
