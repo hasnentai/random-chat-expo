@@ -1,10 +1,18 @@
-import React from "react";
-import { useAuthentication } from "../utils/hooks/useAuthentication";
+import { getItemAsync } from "expo-secure-store";
+import React, { useEffect, useState } from "react";
+import { getValueFor } from "../utils/secure-store";
 import AuthStack from "./auth-stack";
 import UserStack from "./user-stack";
 
 export default function RootNavigation() {
-  const { user } = useAuthentication();
+  const [verificationId, setVerificationId] = useState(null);
 
-  return user ? <UserStack /> : <AuthStack />;
+  useEffect(() => {
+    async function getUserVerificationId() {
+      let key = await getValueFor("verificationId");
+      setVerificationId(key);
+    }
+    getUserVerificationId();
+  }, []);
+  return verificationId ? <UserStack /> : <AuthStack />;
 }

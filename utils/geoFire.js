@@ -1,5 +1,6 @@
 import { GeoFire } from "geofire";
 import firebase from "firebase";
+import { firebaseConfig } from "./firebaseConfig";
 
 const uid = "11edc52b-2918-4d71-9058-f7285e29d894";
 var ref;
@@ -15,16 +16,6 @@ let users = [
  * it creates a connection to the realtime db and returns a ref.
  */
 const setUpFireBase = () => {
-  const firebaseConfig = {
-    apiKey: "AIzaSyAYL85a8H6c-_9fU4OtDE6LLTkVOJJIqAg",
-    authDomain: "native-base-hack.firebaseapp.com",
-    databaseURL: "https://native-base-hack-default-rtdb.firebaseio.com",
-    projectId: "native-base-hack",
-    storageBucket: "native-base-hack.appspot.com",
-    messagingSenderId: "600550657392",
-    appId: "1:600550657392:web:2431af57f1ac899cd613b5",
-  };
-
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
