@@ -1,11 +1,11 @@
-import * as firebase from "firebase";
-import { save } from "../secure-store";
+import * as firebase from 'firebase';
+import { save } from '../secure-store';
 
 const sendVerificationCode = async (
   phoneNumber,
   recaptchaVerifier,
   setVerificationId,
-  showMessage
+  showMessage,
 ) => {
   // The FirebaseRecaptchaVerifierModal ref implements the
   // FirebaseAuthApplicationVerifier interface and can be
@@ -14,14 +14,14 @@ const sendVerificationCode = async (
     const phoneProvider = new firebase.auth.PhoneAuthProvider();
     const verificationId = await phoneProvider.verifyPhoneNumber(
       phoneNumber,
-      recaptchaVerifier.current
+      recaptchaVerifier.current,
     );
     setVerificationId(verificationId);
     showMessage({
-      text: "Verification code has been sent to your phone.",
+      text: 'Verification code has been sent to your phone.',
     });
   } catch (err) {
-    showMessage({ text: `Error: ${err.message}`, color: "red" });
+    showMessage({ text: `Error: ${err.message}`, color: 'red' });
   }
 };
 
@@ -29,15 +29,18 @@ const verifyCode = async (verificationId, verificationCode, showMessage) => {
   try {
     const credential = firebase.auth.PhoneAuthProvider.credential(
       verificationId,
-      verificationCode
+      verificationCode,
     );
     let creds = await firebase.auth().signInWithCredential(credential);
-  
-    showMessage({ text: "Phone authentication successful 👍" });
+    const accessToken = await creds.user.getIdToken();
+    console.log(accessToken);
+    save('access-token', accessToken);
+
+    showMessage({ text: 'Phone authentication successful 👍' });
 
     // save("verificationId", credential.Object.verificationId);
   } catch (err) {
-    showMessage({ text: `Error: ${err.message}`, color: "red" });
+    showMessage({ text: `Error: ${err.message}`, color: 'red' });
   }
 };
 
