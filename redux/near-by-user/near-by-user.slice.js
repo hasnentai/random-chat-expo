@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+/**
+ * @exports nearByUserSlice
+ * @description Create a Slice for user info who are near by and which can be used to display on the screen
+ */
+
 export const nearByUserSlice = createSlice({
   name: "users",
   initialState: {

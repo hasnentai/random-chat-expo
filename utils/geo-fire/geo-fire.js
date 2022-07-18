@@ -10,11 +10,15 @@ let users = [
 ];
 
 /**
- * Connecting to firebase by supplying required params
- * it creates a connection to the realtime db and returns a ref.
+ * @description Connect as per the radius parameter and will be display to
+ * the all near by user by updating a user store
+ * @param {*} uid
+ * @param {*} dispatch
+ * @param {*} usersStore
+ * @hasnentai
+ *
  */
-
-const connect = (uid, dispatch) => {
+const connect = (uid, dispatch, usersStore) => {
   geofireRef = new GeoFire(firebase?.database().ref("getData"));
   geofireRef.set(uid, users[1]);
   geoQuery = geofireRef.query({
@@ -37,7 +41,10 @@ const connect = (uid, dispatch) => {
         distance +
         " km from center)"
     );
-    dispatch(addUsers(key));
+    // Avoid duplicate push in the userStore
+    if (usersStore.indexOf(key) === -1) {
+      dispatch(addUsers(key));
+    }
   });
 
   geoQuery.on("key_exited", function (key, location, distance) {
@@ -51,7 +58,9 @@ const connect = (uid, dispatch) => {
     );
   });
 };
-
+/**
+ * @todo : Need to figure out what exact actions should be taking when user disconnect from the app.
+ */
 const disconnect = () => {
   geofireRef.remove(uid).then(() => {
     console.log("delete");
