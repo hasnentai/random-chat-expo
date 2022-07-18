@@ -39,7 +39,7 @@ const baseStyle = {
   width: "5px",
   height: "100%",
   backgroundColor: "#1df52f",
-  zIndex: "0",
+  zIndex: 0,
   left: "50%",
 };
 const baseMarking = {

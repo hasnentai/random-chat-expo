@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import LoginScreen from "../screens/login-screen";
-import NearByScreen from "../screens/near-by-screen";
+import NearByScreen from "../screens/NearByScreen/NearByScreen";
 
 const Stack = createNativeStackNavigator();
 

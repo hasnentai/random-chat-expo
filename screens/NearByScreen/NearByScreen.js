@@ -1,34 +1,41 @@
-import React, { useEffect } from 'react';
-import {
-  StyleSheet,
-  Text,
-  Dimensions,
-  Animated,
-  Easing,
-  xOffset,
-  yOffset,
-  Image,
-} from 'react-native';
-import { Box, useColorMode, View, Actionsheet, useDisclose } from 'native-base';
+import React, { useContext, useEffect } from "react";
+import { Animated } from "react-native";
+import { Box, useColorMode, useDisclose } from "native-base";
 
 //components
 
-import TopButtons from './components/TopButtons';
-import BackgroundImage from './components/BackgroundImage';
-import Rador from './components/Rador';
-import MorePeopleNearBy from './components/MorePeopleNearBy';
-
+import TopButtons from "./components/TopButtons";
+import BackgroundImage from "./components/BackgroundImage";
+import Rador from "./components/Rador";
+import MorePeopleNearBy from "./components/MorePeopleNearBy";
+import { AuthContext } from "../../utils/firebase-auth/firebase-auth-context";
+import firebase from "firebase";
+import { connect } from "../../utils/geo-fire/geo-fire";
+import { useSelector, useDispatch } from "react-redux";
+import { addUsers } from "../../redux/near-by-user/near-by-user.slice";
 export default function NearByScreen() {
   let { colorMode } = useColorMode();
-  let rotateValueHolder = new Animated.Value(0);
-  const { isOpen, onOpen, onClose } = useDisclose();
+  let user = useContext(AuthContext);
+  const usersStore = useSelector((state) => state.users.arr);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (user.user) {
+      let uid = firebase?.auth().currentUser.uid;
+      connect(uid, dispatch);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    console.log(usersStore);
+  }, [usersStore]);
 
   return (
     <Box
       safeAreaTop
-      width={'100%'}
-      height={'100%'}
-      bg={colorMode === 'light' ? 'primary.300' : 'blueGray.900'}
+      width={"100%"}
+      height={"100%"}
+      bg={colorMode === "light" ? "primary.300" : "blueGray.900"}
     >
       {/* <--- Background Image --> */}
       <BackgroundImage />

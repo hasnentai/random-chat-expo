@@ -9,22 +9,25 @@ import {
   Platform,
 } from "react-native";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
-import * as firebase from "firebase";
-import { firebaseConfig } from "../utils/firebaseConfig";
+
 import {
   sendVerificationCode,
   verifyCode,
 } from "../utils/firebase-auth/firebase-phone-auth";
+import { firebaseConfig } from "../utils/firebaseConfig";
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
+  // useRef to get Dom element while verifying captcha
   const recaptchaVerifier = React.useRef(null);
-  const [phoneNumber, setPhoneNumber] = React.useState();
-  const [verificationId, setVerificationId] = React.useState();
-  const [verificationCode, setVerificationCode] = React.useState();
+
+  // local state for all state variables
+  const [state, setState] = React.useState({
+    phoneNumber: undefined,
+    verificationId: undefined,
+    verificationCode: undefined,
+  });
+
+  //TODO:: Should be removed soon may be @mandeep can take care while developing a UI for phone auth
 
   const [message, showMessage] = React.useState(
     !firebaseConfig || Platform.OS === "web"
@@ -36,10 +39,7 @@ export default function LoginScreen() {
 
   return (
     <View style={{ padding: 20, marginTop: 50 }}>
-      <FirebaseRecaptchaVerifierModal
-        ref={recaptchaVerifier}
-        firebaseConfig={firebaseConfig}
-      />
+      {firebaseRecaptchaNode()}
       <Text style={{ marginTop: 20 }}>Enter phone number</Text>
       <TextInput
         style={{ marginVertical: 10, fontSize: 17 }}
@@ -48,16 +48,18 @@ export default function LoginScreen() {
         autoCompleteType="tel"
         keyboardType="phone-pad"
         textContentType="telephoneNumber"
-        onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
+        onChangeText={(phoneNumber) =>
+          setState((prev) => ({ ...prev, phoneNumber: phoneNumber }))
+        }
       />
       <Button
         title="Send Verification Code"
-        disabled={!phoneNumber}
+        disabled={!state.phoneNumber}
         onPress={() => {
           sendVerificationCode(
-            phoneNumber,
+            state.phoneNumber,
             recaptchaVerifier,
-            setVerificationId,
+            setState,
             showMessage
           );
         }}
@@ -65,15 +67,22 @@ export default function LoginScreen() {
       <Text style={{ marginTop: 20 }}>Enter Verification code</Text>
       <TextInput
         style={{ marginVertical: 10, fontSize: 17 }}
-        editable={!!verificationId}
+        editable={!!state.verificationId}
         placeholder="123456"
-        onChangeText={(data) => setVerificationCode(data)}
+        onChangeText={(data) =>
+          setState((prev) => ({ ...prev, verificationCode: data }))
+        }
       />
       <Button
         title="Confirm Verification Code"
-        disabled={!verificationId}
+        disabled={!state.verificationId}
         onPress={() =>
-          verifyCode(verificationId, verificationCode, showMessage)
+          verifyCode(
+            state.verificationId,
+            state.verificationCode,
+            showMessage,
+            navigation
+          )
         }
       />
       {message ? (
@@ -98,4 +107,13 @@ export default function LoginScreen() {
       ) : undefined}
     </View>
   );
+
+  function firebaseRecaptchaNode() {
+    return (
+      <FirebaseRecaptchaVerifierModal
+        ref={recaptchaVerifier}
+        firebaseConfig={firebaseConfig}
+      />
+    );
+  }
 }

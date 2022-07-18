@@ -1,9 +1,7 @@
 import { GeoFire } from "geofire";
 import firebase from "firebase";
-import { firebaseConfig } from "./firebaseConfig";
+import { addUsers } from "../../redux/near-by-user/near-by-user.slice";
 
-const uid = "11edc52b-2918-4d71-9058-f7285e29d894";
-var ref;
 var geofireRef;
 let geoQuery;
 let users = [
@@ -15,17 +13,9 @@ let users = [
  * Connecting to firebase by supplying required params
  * it creates a connection to the realtime db and returns a ref.
  */
-const setUpFireBase = () => {
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
 
-  ref = firebase.database().ref();
-  geofireRef = new GeoFire(firebase.database().ref("getData"));
-};
-
-const connect = () => {
-  setUpFireBase();
+const connect = (uid, dispatch) => {
+  geofireRef = new GeoFire(firebase?.database().ref("getData"));
   geofireRef.set(uid, users[1]);
   geoQuery = geofireRef.query({
     center: users[1],
@@ -47,6 +37,7 @@ const connect = () => {
         distance +
         " km from center)"
     );
+    dispatch(addUsers(key));
   });
 
   geoQuery.on("key_exited", function (key, location, distance) {
