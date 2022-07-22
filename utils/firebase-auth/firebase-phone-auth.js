@@ -1,6 +1,6 @@
-import firebase from "firebase/app";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { storeData } from "../secure-store";
+import firebase from 'firebase/app';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { storeData } from '../secure-store';
 
 /**
  *
@@ -15,20 +15,20 @@ const sendVerificationCode = async (
   phoneNumber,
   recaptchaVerifier,
   setVerificationId,
-  showMessage
+  showMessage,
 ) => {
   try {
     const phoneProvider = new firebase.auth.PhoneAuthProvider();
     const verificationId = await phoneProvider.verifyPhoneNumber(
       phoneNumber,
-      recaptchaVerifier.current
+      recaptchaVerifier.current,
     );
     setVerificationId((prev) => ({ ...prev, verificationId: verificationId }));
     showMessage({
-      text: "Verification code has been sent to your phone.",
+      text: 'Verification code has been sent to your phone.',
     });
   } catch (err) {
-    showMessage({ text: `Error: ${err.message}`, color: "red" });
+    showMessage({ text: `Error: ${err.message}`, color: 'red' });
   }
 };
 
@@ -44,19 +44,19 @@ const verifyCode = async (
   verificationId,
   verificationCode,
   showMessage,
-  navigation
+  navigation,
 ) => {
   try {
     const credential = firebase.auth.PhoneAuthProvider.credential(
       verificationId,
-      verificationCode
+      verificationCode,
     );
     let creds = await firebase.auth().signInWithCredential(credential);
     const accessToken = await creds.user.getIdToken();
-    storeData("access-token", accessToken);
-    navigation.navigate("Nearby");
+    storeData('access-token', accessToken);
+    navigation.replace('Nearby');
   } catch (err) {
-    showMessage({ text: `Error: ${err.message}`, color: "red" });
+    showMessage({ text: `Error: ${err.message}`, color: 'red' });
   }
 };
 
