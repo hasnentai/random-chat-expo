@@ -13,7 +13,7 @@ import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import {
   sendVerificationCode,
   verifyCode,
-} from "../utils/firebase-auth/firebase-phone-auth";
+} from "../utils/firebase/firebase-auth/firebase-phone-auth";
 import { firebaseConfig } from "../utils/firebaseConfig";
 
 export default function LoginScreen({ navigation }) {
@@ -27,8 +27,7 @@ export default function LoginScreen({ navigation }) {
     verificationCode: undefined,
   });
 
-  //TODO:: Should be removed soon may be @mandeep can take care while developing a UI for phone auth
-
+  //TODO:: Should be removed soon may be @ammannn can take care while developing a UI for phone auth
   const [message, showMessage] = React.useState(
     !firebaseConfig || Platform.OS === "web"
       ? {

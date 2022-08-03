@@ -8,11 +8,17 @@ import TopButtons from "./components/TopButtons";
 import BackgroundImage from "./components/BackgroundImage";
 import Rador from "./components/Rador";
 import MorePeopleNearBy from "./components/MorePeopleNearBy";
-import { AuthContext } from "../../utils/firebase-auth/firebase-auth-context";
+import { AuthContext } from "../../utils/firebase/firebase-auth/firebase-auth-context";
 import firebase from "firebase";
 import { connect } from "../../utils/geo-fire/geo-fire";
 import { useSelector, useDispatch } from "react-redux";
 import { addUsers } from "../../redux/near-by-user/near-by-user.slice";
+import {
+  addUserInFirestore,
+  getUserFromFirestoreById,
+} from "../../utils/firebase/firebase-db-service";
+import { removeData } from "../../utils/secure-store";
+import { signOut } from "../../utils/firebase/firebase-auth/firebase-phone-auth";
 export default function NearByScreen() {
   // Hook to get current theme mode from native base
   let { colorMode } = useColorMode();
@@ -30,13 +36,10 @@ export default function NearByScreen() {
   useEffect(() => {
     if (user.user) {
       connect(firebase?.auth().currentUser.uid, dispatch, usersStore);
+      // addUserInFirestore();
+      getUserFromFirestoreById(firebase?.auth().currentUser.uid);
     }
   }, [user]);
-
-  // TODO:: Might be removed in future,This Hook is just for test to get logs on console
-  useEffect(() => {
-    console.log(usersStore);
-  }, [usersStore]);
 
   return (
     <Box
@@ -54,6 +57,7 @@ export default function NearByScreen() {
       {/* <---x--x---> */}
 
       {/* <--- Rador --> */}
+      {/* //TODO:: Component name is having typo. It should be Radar instead of Rador,should be updated by @ammannn  */}
       <Rador />
 
       {/* <--- More people nearby --> */}

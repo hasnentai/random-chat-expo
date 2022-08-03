@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { storeData } from "../secure-store";
+import { removeData, storeData } from "../../secure-store";
+import { addUserInFirestore } from "../firebase-db-service";
 
 /**
  *
@@ -51,10 +52,21 @@ const verifyCode = async (
       verificationId,
       verificationCode
     );
-    let creds = await firebase.auth().signInWithCredential(credential);
+    const creds = await firebase.auth().signInWithCredential(credential);
     const accessToken = await creds.user.getIdToken();
+    const uid = await firebase?.auth().currentUser.uid;
+    //TODO:: @ammannn should be sending this data from UI
+    const user = {
+      firstName: "Klaus",
+      lastName: "K R",
+      photoURL: [],
+      email: "Klauskr@gmail.com",
+      phone: "+918618723986",
+      uid: uid,
+    };
+    await addUserInFirestore(user);
     storeData("access-token", accessToken);
-    navigation.navigate("Nearby");
+    navigation.replace("Nearby");
   } catch (err) {
     showMessage({ text: `Error: ${err.message}`, color: "red" });
   }
@@ -70,4 +82,17 @@ const getUser = () => {
   return user;
 };
 
-export { sendVerificationCode, verifyCode, getUser };
+/**
+ * @description Sign out user form the app.
+ * TODO : // Needs to call disconnect for geoFire to Update user info.
+ */
+const signOut = () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      removeData("access-token");
+    });
+};
+
+export { sendVerificationCode, verifyCode, getUser, signOut };
