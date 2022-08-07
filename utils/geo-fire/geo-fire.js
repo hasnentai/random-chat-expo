@@ -26,6 +26,8 @@ const connect = (uid, dispatch, usersStore) => {
     radius: 100, // No Decimal Values to be provided
   });
 
+  console.log(uid);
+
   geoQuery.on("ready", function () {
     console.log(
       "GeoQuery has loaded and fired all other events for initial data"
@@ -42,7 +44,7 @@ const connect = (uid, dispatch, usersStore) => {
         " km from center)"
     );
     // Avoid duplicate push in the userStore
-    if (usersStore.indexOf(key) === -1) {
+    if (usersStore.indexOf(key) === -1 && key !== uid) {
       dispatch(addUsers(key));
     }
   });

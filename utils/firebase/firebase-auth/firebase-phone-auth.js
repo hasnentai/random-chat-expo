@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { storeData } from "../secure-store";
+import { storeData } from "../../secure-store";
 
 /**
  *

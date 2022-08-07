@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addUsers } from "../../redux/near-by-user/near-by-user.slice";
 import {
   addUserInFirestore,
+  createChatRoom,
   getUserFromFirestoreById,
 } from "../../utils/firebase/firebase-db-service";
 import { removeData } from "../../utils/secure-store";
@@ -34,12 +35,29 @@ export default function NearByScreen() {
 
   // Hook to connect user if an only if user is login
   useEffect(() => {
+    console.log(user.user);
     if (user.user) {
       connect(firebase?.auth().currentUser.uid, dispatch, usersStore);
       // addUserInFirestore();
       getUserFromFirestoreById(firebase?.auth().currentUser.uid);
+
+      console.log(usersStore);
     }
   }, [user]);
+
+  useEffect(() => {
+    console.log(usersStore[0]);
+    if (usersStore.length > 0) {
+      startChat();
+    }
+  }, [usersStore]);
+
+  const startChat = () => {
+    let senderId = firebase?.auth().currentUser.uid;
+    let receiverId = usersStore[0];
+    let message = "Hello";
+    createChatRoom(senderId, receiverId, message);
+  };
 
   return (
     <Box
